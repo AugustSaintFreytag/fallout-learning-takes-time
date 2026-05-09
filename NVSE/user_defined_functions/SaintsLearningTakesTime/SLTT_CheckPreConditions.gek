@@ -1,0 +1,55 @@
+begin function {}
+
+	; Pre-Check Results
+	; 0 Allow
+	; 1 Combat
+	; 2 Movement
+	; 3 Health
+	; 4 Starvation
+	; 5 Dehydration
+	; 6 Sleep
+
+	; Check if player is in combat
+	short iDetectionState = GetPCDetectionState
+
+	if iDetectionState == 1 || iDetectionState == 3
+		SetFunctionValue 1
+		return
+	endif
+
+	; Check if player is swimming, underwater, in air
+	if Player.IsInWater || (Player.GetSitting != 0 && Player.IsInAir)
+		SetFunctionValue 2
+		return
+	endif
+
+	; Health
+	float iPlayerHealth = Player.GetAV Health / Player.GetPermAV Health
+	if iPlayerHealth < 0.5
+		SetFunctionValue 3
+		return
+	endif
+
+	; Needs
+	if GetHardcoreTracking
+		short bPlayerIsStarved = (Player.GetAV Hunger) > 350
+		short bPlayerIsDehydrated = (Player.GetAV Dehydration) > 350
+		short bPlayerIsSleepDeprived = (Player.GetAV SleepDeprevation) > 350
+
+		if bPlayerIsStarved
+			SetFunctionValue 4
+			return
+		endif
+
+		if bPlayerIsDehydrated
+			SetFunctionValue 5
+			return
+		endif
+
+		if bPlayerIsSleepDeprived
+			SetFunctionValue 6
+			return
+		endif
+	endif
+
+end

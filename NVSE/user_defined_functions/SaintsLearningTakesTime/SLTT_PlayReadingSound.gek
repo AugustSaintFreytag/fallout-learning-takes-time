@@ -1,0 +1,11 @@
+begin function {}
+
+	; Sound Playback
+
+	ref rClone = TempCloneForm UIPipBoyClampOn 1 ; Clone form ref
+	SetSoundTraitNumeric rClone 3 -6 ; Adjust volume
+	SetSoundSourceFile rClone "fx\ui\reading\ui_reading\"
+	
+	Player.PlaySound3D rClone
+
+end

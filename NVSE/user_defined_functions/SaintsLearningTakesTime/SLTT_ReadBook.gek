@@ -1,0 +1,43 @@
+begin function { ref rBook, ref rInvBook }
+
+	; UDFs
+
+	ref PlayReadingSoundUDF = CompileScript "SaintsLearningTakesTime\SLTT_PlayReadingSound.gek"
+
+	; Close Pip-Boy
+
+	if GetPipBoyMode != 0
+		TogglePipBoy 
+	endif
+
+	; Fade Out
+
+	ApplyImageSpaceModifier FadeToBlackISFX
+	Call PlayReadingSoundUDF
+
+	; Advance Time
+
+	float fSkillIntelligence = Player.GetActorValue Intelligence
+	float fSkillPerception = Player.GetActorValue Perception
+	
+	float fPerceptionFactor = 1 - (GetMinOf 1 (fSkillPerception / 4)) ; Becomes 0.0 when player has PER 4.
+	float fIntelligenceFactor = 1 - (GetMinOf 1 (fSkillIntelligence / 9)) ; Becomes 0.0 when player has INT 9.
+	float fRandomFactor = (GetRandomPercent) / 100 ; Between 0.0 and 1.0
+
+	float fNumberOfHours = 0.5 + (fPerceptionFactor * 1) + (fIntelligenceFactor * 4) + fRandomFactor
+	let fNumberOfHours := (Ceil (fNumberOfHours * 4)) / 4
+
+	PrintC "Determined reading time as %.2f hour(s) from perception %.2f, intelligence %.2f, random %.2f." fNumberOfHours fPerceptionFactor fIntelligenceFactor fRandomFactor
+
+	float fGameHour = GameHour
+
+	CallAfter 1.0 (begin function {}
+		SetGameHour (fGameHour + fNumberOfHours)
+	end)
+
+	CallWhen (begin Function {} 
+		MessageExAlt 3 "Interface\Icons\Message Icons\glow_message_vaultboy_neutral.dds|You spent %.2f hour(s) going through %z." (fNumberOfHours) (GetName rBook)
+		Player.EquipItem rBook 0 1
+	end) ({} => IsImagespaceActive FadeToBlackISFX == 0)
+
+end

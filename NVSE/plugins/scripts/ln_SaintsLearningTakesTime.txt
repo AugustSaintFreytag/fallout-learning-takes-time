@@ -1,0 +1,18 @@
+; UDFs
+
+ref OnPreActivateBookUDF = CompileScript "SaintsLearningTakesTime\SLTT_OnPreActivateBook.gek"
+
+; Events
+
+SetEventHandlerAlt "ShowOff:OnPreActivateInventoryItem" (begin Function { ref rBaseItem, ref rInvRef, short bIsActivationNotPrevented, short iActivatedHotkey }
+	if eval !HasKeyword rBaseItem "SkillBook"
+		return
+	endif
+
+	PrintC "Processing activation of book '%z'." (GetName rBaseItem)
+
+	Call OnPreActivateBookUDF rBaseItem rInvRef
+	SetFunctionValue 0
+end)
+
+Print "Set up event handlers for Saint's Learning Takes Time."

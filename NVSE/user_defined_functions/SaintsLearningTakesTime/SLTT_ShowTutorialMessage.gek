@@ -1,0 +1,9 @@
+begin function {}
+
+	if Player.IsHardcore
+		MessageBoxEx "Reading skill books allows you to train specific skills. Time will pass when you study. You need to be in good shape, fed, hydrated, rested, and safe. Happy reading!"
+	else
+		MessageBoxEx "Reading skill books allows you to train specific skills. Time will pass when you study. You need to be in good shape and safe. Happy reading!"
+	endif
+
+end

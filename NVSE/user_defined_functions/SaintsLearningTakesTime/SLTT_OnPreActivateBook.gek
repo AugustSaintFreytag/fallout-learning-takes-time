@@ -1,0 +1,64 @@
+begin function { ref rBook, ref rInvBook }
+
+	; UDFs
+
+	ref CheckPreConditionsUDF = CompileScript "SaintsLearningTakesTime\SLTT_CheckPreConditions.gek"
+	ref ShowTutorialMessageUDF = CompileScript "SaintsLearningTakesTime\SLTT_ShowTutorialMessage.gek"
+	ref ReadBookUDF = CompileScript "SaintsLearningTakesTime\SLTT_ReadBook.gek"
+
+	; Pre-Check
+
+	short iPreCheckResult = Call CheckPreConditionsUDF
+
+	if iPreCheckResult == 1
+		MessageExAlt 3 "Interface\Icons\Message Icons\glow_message_vaultboy_sad.dds|You cannot read while in combat."
+		SetFunctionValue 0
+		return
+	endif
+
+	if iPreCheckResult == 2
+		MessageExAlt 3 "Interface\Icons\Message Icons\glow_message_vaultboy_sad.dds|You cannot read while moving around."
+		SetFunctionValue 0
+		return
+	endif
+
+	if iPreCheckResult == 3
+		MessageExAlt 3 "Interface\Icons\Message Icons\glow_message_vaultboy_sad.dds|You cannot read while injured."
+		SetFunctionValue 0
+		return
+	endif
+
+	if iPreCheckResult == 4
+		MessageExAlt 3 "Interface\Icons\Message Icons\glow_message_vaultboy_sad.dds|You cannot read while starving."
+		SetFunctionValue 0
+		return
+	endif
+
+	if iPreCheckResult == 5
+		MessageExAlt 3 "Interface\Icons\Message Icons\glow_message_vaultboy_sad.dds|You cannot read while dehydrated."
+		SetFunctionValue 0
+		return
+	endif
+
+	if iPreCheckResult == 6
+		MessageExAlt 3 "Interface\Icons\Message Icons\glow_message_vaultboy_sad.dds|You cannot read while sleep deprived."
+		SetFunctionValue 0
+		return
+	endif
+
+	PrintC "Pre-check for reading succeeded for '%z', proceeding." (GetName rBook)
+
+	short bDidShowTutorial = Player.AuxiliaryVariableGetFloat "SLTT_bDidShowTutorial"
+
+	if bDidShowTutorial == 0
+		Call ShowTutorialMessageUDF
+		Player.AuxiliaryVariableSetFloat "SLTT_bDidShowTutorial" 1
+		SetFunctionValue 0
+		return
+	endif
+
+	Call ReadBookUDF rBook rInvBook
+	SetFunctionValue 1
+
+end
+
