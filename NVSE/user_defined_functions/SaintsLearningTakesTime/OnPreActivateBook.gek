@@ -2,9 +2,9 @@ begin function { ref rBook, ref rInvBook }
 
 	; UDFs
 
-	ref CheckPreConditionsUDF = CompileScript "SaintsLearningTakesTime\SLTT_CheckPreConditions.gek"
-	ref ShowTutorialMessageUDF = CompileScript "SaintsLearningTakesTime\SLTT_ShowTutorialMessage.gek"
-	ref ReadBookUDF = CompileScript "SaintsLearningTakesTime\SLTT_ReadBook.gek"
+	ref CheckPreConditionsUDF = CompileScript "SaintsLearningTakesTime\CheckPreConditions.gek"
+	ref ShowTutorialMessageUDF = CompileScript "SaintsLearningTakesTime\ShowTutorialMessage.gek"
+	ref ReadBookUDF = CompileScript "SaintsLearningTakesTime\ReadBook.gek"
 
 	; Pre-Check
 
@@ -46,7 +46,7 @@ begin function { ref rBook, ref rInvBook }
 		return
 	endif
 
-	PrintC "Pre-check for reading succeeded for '%z', proceeding." (GetName rBook)
+	; PrintC "Pre-check for reading succeeded for '%z', proceeding." (GetName rBook)
 
 	short bDidShowTutorial = Player.AuxiliaryVariableGetFloat "SLTT_bDidShowTutorial"
 

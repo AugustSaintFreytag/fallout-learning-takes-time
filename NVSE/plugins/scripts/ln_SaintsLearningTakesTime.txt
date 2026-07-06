@@ -1,6 +1,6 @@
 ; UDFs
 
-ref OnPreActivateBookUDF = CompileScript "SaintsLearningTakesTime\SLTT_OnPreActivateBook.gek"
+ref OnPreActivateBookUDF = CompileScript "SaintsLearningTakesTime\OnPreActivateBook.gek"
 
 ; Events
 
@@ -9,7 +9,7 @@ SetEventHandlerAlt "ShowOff:OnPreActivateInventoryItem" (begin Function { ref rB
 		return
 	endif
 
-	PrintC "Processing activation of book '%z'." (GetName rBaseItem)
+	; PrintC "Processing activation of book '%z'." (GetName rBaseItem)
 
 	Call OnPreActivateBookUDF rBaseItem rInvRef
 	SetFunctionValue 0

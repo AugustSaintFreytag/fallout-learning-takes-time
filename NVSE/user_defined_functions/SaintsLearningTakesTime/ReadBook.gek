@@ -2,7 +2,7 @@ begin function { ref rBook, ref rInvBook }
 
 	; UDFs
 
-	ref PlayReadingSoundUDF = CompileScript "SaintsLearningTakesTime\SLTT_PlayReadingSound.gek"
+	ref PlayReadingSoundUDF = CompileScript "SaintsLearningTakesTime\PlayReadingSound.gek"
 
 	; Close Pip-Boy
 
