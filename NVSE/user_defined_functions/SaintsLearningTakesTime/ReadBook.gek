@@ -36,7 +36,7 @@ begin function { ref rBook, ref rInvBook }
 	end)
 
 	CallWhen (begin Function {} 
-		MessageExAlt 3 "Interface\Icons\Message Icons\glow_message_vaultboy_neutral.dds|You spent %.2f hour(s) going through %z." (fNumberOfHours) (GetName rBook)
+		MessageExAlt 3 "interface\icons\message icons\glow_message_vaultboy_reading.dds|You spent %.2f hour(s) going through %z." (fNumberOfHours) (GetName rBook)
 		Player.EquipItem rBook 0 1
 	end) ({} => IsImagespaceActive FadeToBlackISFX == 0)
 
