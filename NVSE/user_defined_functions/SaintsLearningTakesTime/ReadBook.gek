@@ -35,7 +35,7 @@ begin function { ref rBook, ref rInvBook }
 		SetGameHour (fGameHour + fNumberOfHours)
 	end)
 
-	CallWhen (begin Function {} 
+	CallWhen (begin function {} 
 		MessageExAlt 3 "interface\icons\message icons\glow_message_vaultboy_reading.dds|You spent %.2f hour(s) going through %z." (fNumberOfHours) (GetName rBook)
 		Player.EquipItem rBook 0 1
 	end) ({} => IsImagespaceActive FadeToBlackISFX == 0)
